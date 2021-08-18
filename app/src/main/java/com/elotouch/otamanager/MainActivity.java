@@ -26,8 +26,11 @@ public class MainActivity extends AppCompatActivity {
 
     private static String TAG = MainActivity.class.getSimpleName();
     private String accesstoken ="";
-    private String OTA_STATUS_URL = "http://10.51.1.137:8080/ota.json";
-    private String OTA_DOWNLOAD_URL ="http://10.51.1.137:8080/ota.zip";
+    private String OTA_STATUS_URL = "http://192.168.3.43:8080/ota.json";
+    private String OTA_DOWNLOAD_URL ="http://192.168.3.43:8080/ota.zip";
+    private String OTA_Storge_Dir = "/sdcard/";
+//    private String OTA_Package_Name = "elo-i-series-4_0-perf-ota.zip";
+    private String OTA_Package_Name = "ota.zip";
     private  int downloadId;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
@@ -104,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint({"SdCardPath", "SetTextI18n"})
     private void download_apply_OTA() {
-         downloadId = PRDownloader.download(OTA_DOWNLOAD_URL, "/sdcard/Download/", "ota.zip")
+         downloadId = PRDownloader.download(OTA_DOWNLOAD_URL, OTA_Storge_Dir, OTA_Package_Name)
                 .build()
                 .setOnStartOrResumeListener(() -> {
 
@@ -127,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onDownloadComplete() {
                         OTA.instance.downloadApplyABOTA(MainActivity.this, accesstoken, "",
-                                "/sdcard/Download/ota.zip","", otaHandler);
+                                OTA_Storge_Dir + OTA_Package_Name,"", otaHandler);
                     }
 
                     @Override
