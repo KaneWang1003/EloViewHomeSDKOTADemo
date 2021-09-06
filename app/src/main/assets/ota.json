@@ -1,0 +1,48 @@
+{
+    "FILE_HASH": "NecLGSOtl9dLref9zlcMIcakFBjqp62iNXm2Rb/vrIQ=",
+    "FILE_SIZE": "946662962",
+    "METADATA_HASH": "ixaDEmvcmDnNaAfW7V2nypSWRn89zCCI5j2nyZxbROk=",
+    "METADATA_SIZE": "65687",
+    "__": "*** Generated using tools/gen_update_config.py ***",
+    "ab_config": {
+        "force_switch_slot": true,
+        "property_files": [
+            {
+                "filename": "payload_metadata.bin",
+                "offset": 46281,
+                "size": 65951
+            },
+            {
+                "filename": "payload.bin",
+                "offset": 46281,
+                "size": 946662962
+            },
+            {
+                "filename": "payload_properties.txt",
+                "offset": 946709301,
+                "size": 154
+            },
+            {
+                "filename": "care_map.pb",
+                "offset": 766,
+                "size": 262
+            },
+            {
+                "filename": "compatibility.zip",
+                "offset": 1081,
+                "size": 45153
+            },
+            {
+                "filename": "metadata",
+                "offset": 69,
+                "size": 650
+            }
+        ],
+        "verify_payload_metadata": false
+    },
+    "ab_install_type": "STREAMING",
+    "build-timestamp": "1628736763",
+    "build-version": "5.000.007.0021+ap",
+    "name": "S sdm660_64-ota-5.000.007.0021+ap",
+    "url": ""
+}

@@ -7,12 +7,12 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button_check"
+        android:id="@+id/button_checkfromurl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
         android:layout_marginTop="56dp"
-        android:text="check"
+        android:text="checkStatus_url"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
@@ -21,11 +21,11 @@
         android:id="@+id/button_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="56dp"
-        android:text="update"
-        app:layout_constraintStart_toEndOf="@+id/button_check"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="16dp"
+        android:text="start OTA update"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_checkfromurl"
         tools:ignore="HardcodedText" />
 
     <TextView
@@ -36,28 +36,27 @@
         android:layout_marginTop="30dp"
         android:singleLine="false"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_stop" />
+        app:layout_constraintTop_toBottomOf="@+id/button_update" />
 
     <Button
         android:id="@+id/button_stop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="23dp"
-        android:text="stop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_check"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="16dp"
+        android:text="stop ota update"
+        app:layout_constraintStart_toEndOf="@+id/button_update"
+        app:layout_constraintTop_toBottomOf="@+id/button_checkfromurl"
         tools:ignore="HardcodedText" />
 
     <Button
-        android:id="@+id/button_resume"
+        android:id="@+id/button_checkfromlocal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="23dp"
-        android:text="Resume"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/button_stop"
-        app:layout_constraintTop_toBottomOf="@+id/button_update"
-        tools:ignore="HardcodedText" />
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="53dp"
+        android:text="checkstatus_local"
+        app:layout_constraintStart_toEndOf="@+id/button_checkfromurl"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

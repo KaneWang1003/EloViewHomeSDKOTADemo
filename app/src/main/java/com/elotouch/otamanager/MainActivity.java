@@ -2,12 +2,14 @@ package com.elotouch.otamanager;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +22,7 @@ import com.downloader.PRDownloaderConfig;
 import com.eloview.homesdk.accountManager.AccountManager;
 import com.eloview.homesdk.otaManager.OTA;
 
+import java.io.File;
 import java.util.Properties;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private String accesstoken ="";
     private String OTA_STATUS_URL = "http://192.168.3.43:8080/ota.json";
     private String OTA_DOWNLOAD_URL ="http://192.168.3.43:8080/ota.zip";
-    private String OTA_Storge_Dir = "/sdcard/";
+    private String OTA_STATUS_FILE = "file://sdcard/Download/ota/ota.json"; // sdk 会判断路径格式，要加file://
+    private String OTA_Storge_Dir = "/sdcard/Download/ota";                 // 不要加file://
 //    private String OTA_Package_Name = "elo-i-series-4_0-perf-ota.zip";
     private String OTA_Package_Name = "ota.zip";
     private  int downloadId;
@@ -63,8 +67,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         txt_result = findViewById(R.id.txt_result);
         verifyStoragePermissions(this);
+
+        copyAssertJsontoSdcard(this, "/sdcard/Download/ota/ota.json");
         init_token();
-// Setting timeout globally for the download network requests:
+        // Setting timeout globally for the download network requests:
         PRDownloaderConfig config = PRDownloaderConfig.newBuilder()
                 .setReadTimeout(10_000)
                 .setConnectTimeout(10_000)
@@ -77,13 +83,24 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        findViewById(R.id.button_check).setOnClickListener(v -> OTA.instance.checkOTAStatus(MainActivity.this, accesstoken, OTA_STATUS_URL, otaHandler ));
+        findViewById(R.id.button_checkfromurl).setOnClickListener(v -> OTA.instance.checkOTAStatus(MainActivity.this, accesstoken, OTA_STATUS_URL, otaHandler ));
+
 
 
         findViewById(R.id.button_update).setOnClickListener(v -> download_apply_OTA());
 
         findViewById(R.id.button_stop).setOnClickListener(v -> stopOTADownload());
-        findViewById(R.id.button_resume).setOnClickListener(v -> resumeOTADownload());
+        findViewById(R.id.button_checkfromlocal).setOnClickListener(v -> OTA.instance.checkOTAStatus(this, accesstoken, OTA_STATUS_FILE, otaHandler));
+    }
+
+    private void copyAssertJsontoSdcard(Context context, String dest) {
+        File f=new File(dest);
+        if (!f.exists()) {
+            new AssertManager(context).fromAsset("ota.json").toSdcard(dest);
+        } else {
+            Log.d(TAG, "ota json already exist");
+        }
+
     }
 
     private void init_token() {
@@ -104,6 +121,8 @@ public class MainActivity extends AppCompatActivity {
     private void resumeOTADownload() {
         PRDownloader.resume(downloadId);
     }
+
+
 
     @SuppressLint({"SdCardPath", "SetTextI18n"})
     private void download_apply_OTA() {
